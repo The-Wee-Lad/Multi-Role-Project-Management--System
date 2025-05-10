@@ -1,0 +1,12 @@
+{
+  "name": "multi-role-project-management--system",
+  "version": "1.0.0",
+  "description": "This is a comprehensive Project management system for handling projects and users in a Corporate hierarchy",
+  "license": "ISC",
+  "author": "Aditya Narayan",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
