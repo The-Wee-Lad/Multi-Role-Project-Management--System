@@ -1,0 +1,25 @@
+# MongoDB connection URI
+
+MONGO_URI='mongodb://<username>:<password>@<host>:<port>/<database_name>'
+
+# Application port
+
+PORT='3000'
+
+# Environment mode (e.g. development, production)
+
+NODE_ENV='development'
+
+# Access and Refresh token keys for JWT
+
+ACCESS_TOKEN_KEY='<your-access-token-key>'
+REFRESH_TOKEN_KEY='<your-refresh-token-key>'
+
+# Token expiry times
+
+ACCESS_TOKEN_EXPIRES='1h' # 1 hour
+REFRESH_TOKEN_EXPIRES='30d' # 30 days
+
+# Base API URL for your application
+
+BASE_API_URL='/phoenix-imf/api/v1'
