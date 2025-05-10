@@ -4,9 +4,9 @@ dotenv.config({
   path: './.env',
 });
 
-// --------------------------------------
+
+
 // Configuration Types
-// --------------------------------------
 interface Config {
   DATABASE_URL: string;
   ACCESS_TOKEN_KEY: string;
@@ -16,12 +16,11 @@ interface Config {
   PORT: number;
   NODE_ENV: 'development' | 'production' | 'staging';
   BASE_API_URL: string;
+  DATABASE_NAME: string
 }
 
 
 // Configuration
-
-
 const env: Config = {
   DATABASE_URL: process.env.DATABASE_URL!,
   ACCESS_TOKEN_KEY: process.env.ACCESS_TOKEN_KEY!,
@@ -33,8 +32,8 @@ const env: Config = {
     (process.env.NODE_ENV! as 'development' | 'production' | 'staging') ||
     'development',
   BASE_API_URL: process.env.BASE_API_URL!,
+  DATABASE_NAME: process.env.DATABASE_NAME!
 };
-
 
 // Constants
 const cookieOptions = {
