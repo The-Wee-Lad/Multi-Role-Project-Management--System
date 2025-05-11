@@ -74,4 +74,9 @@ const updateProject = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(new ApiResponse(200, 'Project updated successfully', updated));
 });
 
-export { createProject, getProjects, deleteProject, updateProject };
+export {
+  createProject,
+  getProjects,
+  deleteProject,
+  updateProject
+};

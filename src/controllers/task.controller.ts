@@ -102,4 +102,10 @@ const updateTask = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(new ApiResponse(200, 'Task updated successfully', updatedTask));
 });
 
-export { createTask, unassignUserFromTask, assignUserToTask, deleteTask, updateTask };
+export {
+  createTask,
+  unassignUserFromTask,
+  assignUserToTask,
+  deleteTask,
+  updateTask
+};

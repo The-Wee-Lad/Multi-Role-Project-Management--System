@@ -55,4 +55,10 @@ const corsOptions: CorsOptions = {
   credentials: true,
 };
 
-export { cookieOptions, env, corsOptions };
+const rateLimitOptions = {
+  windowMs: 15 * 60 * 1000,
+  max: 150,
+  message: 'Too many requests from this IP, please try again later.',
+}
+
+export { cookieOptions, env, corsOptions, rateLimitOptions };
