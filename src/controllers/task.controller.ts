@@ -124,7 +124,37 @@ const updateTask = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const getAllTasks = asyncHandler(async (req: Request, res: Response) => {
-  // TODO:
+  const {
+    page = '1',
+    batchSize = '10',
+  } = req.query as {
+    page?: string;
+    batchSize?: string;
+  };
+
+  const totalTasks = Task.countDocuments();
+  const {
+    assignedTo,
+    status
+  } = req.body as {
+    assignedTo?: string[];
+    status?: 'todo' | 'inprogress' | 'done'
+  };
+
+  const queryFilter: any = { companyId: req.user?.companyId };
+  if (assignedTo)
+    queryFilter.assignedTo = { $in: assignedTo };
+  if (status)
+    queryFilter.status = status;
+
+  const result = await Task.find(queryFilter)
+    .skip((parseInt(page) - 1) * parseInt(batchSize))
+    .limit(parseInt(batchSize));
+
+  res.status(200).json(new ApiResponse(200, 'Tasks Fetsched  : ', {
+    tasks: result,
+    totalTasks
+  }));
 });
 
 export {

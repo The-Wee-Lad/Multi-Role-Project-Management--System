@@ -72,14 +72,10 @@ const updateUser = asyncHandler(async (req: Request, res: Response) => {
 
 const deleteUser = asyncHandler(async (req: Request, res: Response) => {
   const { userId, adminPassword } = req.body;
-  if (
-    req.user &&
-    'checkPassword' in req.user &&
-    !(await req.user?.checkPassword(adminPassword))
-  )
+  if (req.user && 'checkPassword' in req.user && !(await req.user?.checkPassword(adminPassword)))
     throw new ApiError(401, 'Invalid password', ErrorCode.INVALID_CREDENTIALS);
 
-  const deletedUser = await User.findByIdAndDelete(req.user?._id);
+  const deletedUser = await User.findByIdAndDelete(userId);
   if (!deletedUser)
     throw new ApiError(400, 'Np sucj user', ErrorCode.DATA_NOT_FOUND_ERROR);
   res
