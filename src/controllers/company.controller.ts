@@ -30,7 +30,7 @@ const createCompany = asyncHandler(async (req: Request, res: Response) => {
   const newAdmin = await User.create({
     name: req.body.adminName,
     email: req.body.adminEmail,
-    password: req.body.password,
+    password: req.body.adminPassword,
     companyId: newCompany._id,
     role: 'Admin',
   });
@@ -43,7 +43,12 @@ const createCompany = asyncHandler(async (req: Request, res: Response) => {
   res.status(201).json(
     new ApiResponse(201, 'New Company and an admin Created', {
       company: newCompany,
-      admin: newAdmin,
+      admin: {
+        name: newAdmin.name,
+        email: newAdmin.email,
+        role: newAdmin.role,
+        companyId: newAdmin.companyId
+      },
     })
   );
 });

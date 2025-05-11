@@ -19,10 +19,7 @@ const enum ErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
 }
 
-interface ErrorDetail {
-  field: string;
-  message: string;
-}
+
 
 function formatJoiErrors(error: Joi.ValidationError) {
   if (!error || !error.details) return [];
@@ -33,4 +30,4 @@ function formatJoiErrors(error: Joi.ValidationError) {
   }));
 }
 
-export { ErrorCode, ErrorDetail, formatJoiErrors };
+export { ErrorCode, formatJoiErrors };

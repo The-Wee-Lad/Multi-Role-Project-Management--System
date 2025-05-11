@@ -14,7 +14,6 @@ import { Task } from '../models/task.model.js';
 
 const createUser = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password, role = 'Member' } = req.body;
-
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new ApiError(
@@ -23,7 +22,7 @@ const createUser = asyncHandler(async (req: Request, res: Response) => {
       ErrorCode.EMAIL_USERNAME_CLASH
     );
   }
-  const newUser = User.create({
+  const newUser = await User.create({
     name,
     email,
     password,

@@ -25,7 +25,7 @@ const userSchema = new Schema<IUser>(
     },
     role: {
       type: String,
-      enum: ['Admin', 'Manager', 'User'],
+      enum: ['Admin', 'Manager', 'Member'],
     },
     companyId: {
       type: Schema.Types.ObjectId,

@@ -1,7 +1,12 @@
 import { asyncHandler } from './asyncHandler.js';
 import { ApiError } from './ApiError.js';
 import { ApiResponse } from './ApiResponse.js';
-import { ErrorCode, ErrorDetail, formatJoiErrors } from './errorCode.js';
+import { ErrorCode, formatJoiErrors } from './errorCode.js';
+
+interface ErrorDetail {
+  field: string;
+  message: string;
+}
 
 export {
   asyncHandler,

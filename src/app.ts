@@ -9,6 +9,7 @@ const app = express();
 const limiter = rateLimit(rateLimitOptions);
 
 app.use(limiter);
+app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ limit: '16KB', extended: true }));
 app.use(express.json({ limit: '16Kb' }));
@@ -23,12 +24,12 @@ app.use('/healthCheck', (_, res) => {
 const base_url = env.BASE_API_URL;
 
 import { projectRouter, taskRouter, userRouter } from './routes/index.js';
-import { authorise, verifyToken } from './middlewares';
+import { authorise, globalErrorHandler, verifyToken } from './middlewares';
 
 app.use(base_url + '/user', userRouter);
 app.use(base_url + '/project', verifyToken, authorise('Admin', 'Manager'), projectRouter);
 app.use(base_url + '/task', verifyToken, authorise('Admin', 'Manager'), taskRouter);
 
-
+app.use(globalErrorHandler);
 
 export { app };

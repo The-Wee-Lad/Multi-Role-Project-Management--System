@@ -28,6 +28,7 @@ router
   .route('/refresh-access-token')
   .post(authorise('Admin', 'Member'), refreshAccessToken);
 router.route('/company').post(validator(createCompanySchema), createCompany);
+router.route('/login').post(validator(loginInputSchema), login);
 
 router.use(verifyToken);
 
@@ -38,7 +39,6 @@ router
   .get(authorise('Admin', 'Member'), getCurrentUser)
   .delete(authorise('Admin'), validator(deleteUSerSchema), deleteUser);
 
-router.route('/login').post(validator(loginInputSchema), login);
 
 router.route('/logout').post(logout);
 
