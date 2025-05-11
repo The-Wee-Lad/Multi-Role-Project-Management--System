@@ -1,9 +1,4 @@
-import { ErrorCode } from "./errorCode.js";
-
-interface ErrorDetail {
-  field: string;
-  message: string;
-}
+import { ErrorCode, ErrorDetail } from './errorCode.js';
 
 class ApiResponse {
   statusCode: number;
@@ -12,7 +7,13 @@ class ApiResponse {
   success: boolean;
   data: any;
   detail?: ErrorDetail[];
-  constructor(statusCode: number, message: string, data: any, customErrorCode?: ErrorCode, detail?: ErrorDetail[]) {
+  constructor(
+    statusCode: number,
+    message: string,
+    data: any,
+    customErrorCode?: ErrorCode,
+    detail?: ErrorDetail[]
+  ) {
     this.statusCode = statusCode;
     this.message = message;
     this.success = statusCode < 400;

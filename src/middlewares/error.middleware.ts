@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
-import { ApiError, ApiResponse, ErrorCode } from '../utils/index.js';
-
-interface ErrorDetail {
-  field: string;
-  message: string;
-}
+import {
+  ApiError,
+  ApiResponse,
+  ErrorCode,
+  ErrorDetail,
+} from '../utils/index.js';
 
 const globalErrorHandler = async (
   error: any,
@@ -14,8 +14,11 @@ const globalErrorHandler = async (
 ) => {
   const statusCode: number = error.statusCode || 500;
   const message: string = error.message || 'Server Error : something went awry';
-  const customErrorCode: ErrorCode = error.customErrorCode as ErrorCode || ErrorCode.UNEXPECTED_ERROR;
-  const detail: ErrorDetail[] | undefined = error.detail as ErrorDetail[] | undefined;
+  const customErrorCode: ErrorCode =
+    (error.customErrorCode as ErrorCode) || ErrorCode.UNEXPECTED_ERROR;
+  const detail: ErrorDetail[] | undefined = error.detail as
+    | ErrorDetail[]
+    | undefined;
   res
     .status(statusCode)
     .json(new ApiResponse(statusCode, message, {}, customErrorCode, detail));

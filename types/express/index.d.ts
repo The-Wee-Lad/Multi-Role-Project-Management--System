@@ -4,6 +4,6 @@ import { IUser } from '../user';
 
 declare module 'express' {
   export interface Request {
-    user?: tokenPayload;
+    user?: tokenPayload | IUser;
   }
-};
+}
