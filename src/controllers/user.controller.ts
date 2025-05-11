@@ -189,7 +189,7 @@ const listUser = asyncHandler(async (req: Request, res: Response) => {
     batchSize?: string;
     taskId?: string;
   };
-  const queryFilter: any = {};
+  const queryFilter: any = { companyId: req.user?.companyId };
   if (taskId) queryFilter.taskId = taskId;
   const documents = User.countDocuments();
   const result = await User.find(queryFilter)
@@ -201,7 +201,7 @@ const listUser = asyncHandler(async (req: Request, res: Response) => {
       new ApiResponse(
         200,
         `page ${page}, batchSize ${batchSize}, taskId ${taskId}`,
-        result
+        { users: result, userCount: documents }
       )
     );
 });

@@ -7,7 +7,7 @@ import {
 } from '../utils/index.js';
 import Joi from 'joi';
 
-const validator = (validationSchema: Joi.ObjectSchema) => {
+export const validator = (validationSchema: Joi.ObjectSchema) => {
   return asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const { error, value } = validationSchema.validate(req.body);
