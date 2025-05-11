@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   createUser,
   updateUser,
@@ -7,13 +7,13 @@ import {
   logout,
   getCurrentUser,
   listUser,
-  refreshAccessToken
-} from '../controllers/user.controller.js'
+  refreshAccessToken,
+} from '../controllers/user.controller.js';
 
 import { createCompany } from '../controllers/company.controller.js';
 
 const router = Router();
 
-router
+router;
 
 export { router as userRouter };

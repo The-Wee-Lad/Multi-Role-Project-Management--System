@@ -19,7 +19,9 @@ const createTask = asyncHandler(async (req: Request, res: Response) => {
     projectId,
   });
 
-  res.status(201).json(new ApiResponse(201, 'Task created successfully', newTask));
+  res
+    .status(201)
+    .json(new ApiResponse(201, 'Task created successfully', newTask));
 });
 
 const assignUserToTask = asyncHandler(async (req: Request, res: Response) => {
@@ -31,42 +33,54 @@ const assignUserToTask = asyncHandler(async (req: Request, res: Response) => {
   if (!task)
     throw new ApiError(404, 'Task not found', ErrorCode.DATA_NOT_FOUND_ERROR);
 
-
   const alreadyAssigned = task.assignedTo.some(
     (id) => id.toString() === userId.toString()
   );
 
   if (alreadyAssigned) {
-    throw new ApiError(409, 'User already assigned to task', ErrorCode.ALREADY_EXISTS);
+    throw new ApiError(
+      409,
+      'User already assigned to task',
+      ErrorCode.ALREADY_EXISTS
+    );
   }
 
   task.assignedTo.push(userId);
   await task.save();
 
-  res.status(200).json(new ApiResponse(200, 'User assigned to task successfully', task));
+  res
+    .status(200)
+    .json(new ApiResponse(200, 'User assigned to task successfully', task));
 });
 
-const unassignUserFromTask = asyncHandler(async (req: Request, res: Response) => {
-  const { taskId } = req.params;
-  const { userId } = req.body;
+const unassignUserFromTask = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { taskId } = req.params;
+    const { userId } = req.body;
 
-  const task = await Task.findById(taskId);
+    const task = await Task.findById(taskId);
 
-  if (!task)
-    throw new ApiError(404, 'Task not found', ErrorCode.DATA_NOT_FOUND_ERROR);
+    if (!task)
+      throw new ApiError(404, 'Task not found', ErrorCode.DATA_NOT_FOUND_ERROR);
 
+    const initialLength = task.assignedTo.length;
+    task.assignedTo = task.assignedTo.filter(
+      (id) => id.toString() !== userId.toString()
+    );
 
-  const initialLength = task.assignedTo.length;
-  task.assignedTo = task.assignedTo.filter(
-    (id) => id.toString() !== userId.toString()
-  );
+    if (task.assignedTo.length === initialLength)
+      throw new ApiError(
+        500,
+        'User was not assigned to this task',
+        ErrorCode.DATABASE_ERROR
+      );
 
-  if (task.assignedTo.length === initialLength)
-    throw new ApiError(500, 'User was not assigned to this task', ErrorCode.DATABASE_ERROR);
-
-  await task.save();
-  res.status(200).json(new ApiResponse(200, 'User unassigned from task', task));
-});
+    await task.save();
+    res
+      .status(200)
+      .json(new ApiResponse(200, 'User unassigned from task', task));
+  }
+);
 
 const deleteTask = asyncHandler(async (req: Request, res: Response) => {
   const { taskId } = req.params;
@@ -74,12 +88,17 @@ const deleteTask = asyncHandler(async (req: Request, res: Response) => {
   const deletedTask = await Task.findByIdAndDelete(taskId);
 
   if (!deletedTask) {
-    throw new ApiError(404, "No such task found", ErrorCode.DATA_NOT_FOUND_ERROR)
+    throw new ApiError(
+      404,
+      'No such task found',
+      ErrorCode.DATA_NOT_FOUND_ERROR
+    );
   }
 
-  res.status(200).json(new ApiResponse(200, 'Task deleted successfully', deletedTask));
+  res
+    .status(200)
+    .json(new ApiResponse(200, 'Task deleted successfully', deletedTask));
 });
-
 
 const updateTask = asyncHandler(async (req: Request, res: Response) => {
   const { taskId } = req.params;
@@ -99,7 +118,9 @@ const updateTask = asyncHandler(async (req: Request, res: Response) => {
 
   const updatedTask = await task.save();
 
-  res.status(200).json(new ApiResponse(200, 'Task updated successfully', updatedTask));
+  res
+    .status(200)
+    .json(new ApiResponse(200, 'Task updated successfully', updatedTask));
 });
 
 export {
@@ -107,5 +128,5 @@ export {
   unassignUserFromTask,
   assignUserToTask,
   deleteTask,
-  updateTask
+  updateTask,
 };

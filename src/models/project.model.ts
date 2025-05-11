@@ -5,7 +5,7 @@ const projectSchema = new Schema<IProject>(
     name: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     description: {
       type: String,
@@ -14,12 +14,12 @@ const projectSchema = new Schema<IProject>(
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: 'users',
-      required: true
+      required: true,
     },
     companyId: {
       type: Schema.Types.ObjectId,
       ref: 'companies',
-      required: true
+      required: true,
     },
   },
   {

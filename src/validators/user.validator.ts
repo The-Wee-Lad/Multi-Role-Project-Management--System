@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import Joi from "joi";
+import mongoose from 'mongoose';
+import Joi from 'joi';
 
 const createUserInputSchema = Joi.object({
   name: Joi.string().min(3).required(),
@@ -30,7 +30,6 @@ const updateSchema = Joi.object({
   newPassword: Joi.string().min(8).max(20).required(),
 });
 
-
 const createCompanySchema = Joi.object({
   name: Joi.string().min(3).max(50),
   domain: Joi.string().min(3).max(50),
@@ -39,4 +38,11 @@ const createCompanySchema = Joi.object({
   adminPassword: Joi.string(),
 });
 
-export { createUserInputSchema, loginInputSchema, objectIdSchema, deleteUSerSchema, updateSchema, createCompanySchema };
+export {
+  createUserInputSchema,
+  loginInputSchema,
+  objectIdSchema,
+  deleteUSerSchema,
+  updateSchema,
+  createCompanySchema,
+};

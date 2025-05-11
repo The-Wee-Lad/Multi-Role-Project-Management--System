@@ -11,7 +11,6 @@ import { Company } from '../models/company.model.js';
 import { User } from '../models/user.model.js';
 
 const createCompany = asyncHandler(async (req: Request, res: Response) => {
-
   const existingUser = await User.findOne({ email: req.body?.adminEmail });
   if (existingUser) {
     throw new ApiError(
@@ -41,14 +40,12 @@ const createCompany = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(500, 'DB Error', ErrorCode.DATABASE_ERROR);
   }
 
-  res
-    .status(201)
-    .json(
-      new ApiResponse(201, 'New Company and an admin Created', {
-        company: newCompany,
-        admin: newAdmin,
-      })
-    );
+  res.status(201).json(
+    new ApiResponse(201, 'New Company and an admin Created', {
+      company: newCompany,
+      admin: newAdmin,
+    })
+  );
 });
 
-export { createCompany }
+export { createCompany };

@@ -30,13 +30,11 @@ const createUser = asyncHandler(async (req: Request, res: Response) => {
     companyId: req.user?.companyId,
   });
   if (!newUser) throw new ApiError(500, 'DB Error', ErrorCode.DATABASE_ERROR);
-  res
-    .status(201)
-    .json(
-      new ApiResponse(201, 'New User Created, ask user to change password', {
-        user: newUser,
-      })
-    );
+  res.status(201).json(
+    new ApiResponse(201, 'New User Created, ask user to change password', {
+      user: newUser,
+    })
+  );
 });
 
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
@@ -182,7 +180,11 @@ const refreshAccessToken = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const listUser = asyncHandler(async (req: Request, res: Response) => {
-  const { page = '1', batchSize = '10', taskId } = req.query as {
+  const {
+    page = '1',
+    batchSize = '10',
+    taskId,
+  } = req.query as {
     page?: string;
     batchSize?: string;
     taskId?: string;
@@ -190,12 +192,22 @@ const listUser = asyncHandler(async (req: Request, res: Response) => {
   const queryFilter: any = {};
   if (taskId) queryFilter.taskId = taskId;
   const documents = User.countDocuments();
-  const result = await User.find(queryFilter).skip((parseInt(page) - 1) * parseInt(batchSize)).limit(parseInt(batchSize));
-  res.status(200).json(new ApiResponse(200, `page ${page}, batchSize ${batchSize}, taskId ${taskId}`, result));
+  const result = await User.find(queryFilter)
+    .skip((parseInt(page) - 1) * parseInt(batchSize))
+    .limit(parseInt(batchSize));
+  res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        `page ${page}, batchSize ${batchSize}, taskId ${taskId}`,
+        result
+      )
+    );
 });
 
 const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
-  res.status(200).json(new ApiResponse(200, "Current Use Fetched", req.user));
+  res.status(200).json(new ApiResponse(200, 'Current Use Fetched', req.user));
 });
 
 export {
@@ -206,5 +218,5 @@ export {
   logout,
   getCurrentUser,
   listUser,
-  refreshAccessToken
-}
+  refreshAccessToken,
+};
