@@ -15,6 +15,7 @@ import {
 import { createCompany } from '../controllers/company.controller.js';
 import { verifyToken, authorise, validator } from '../middlewares/index.js';
 import {
+  createCompanySchema,
   createUserInputSchema,
   deleteUSerSchema,
   loginInputSchema,
@@ -26,7 +27,7 @@ const router = Router();
 router
   .route('/refresh-access-token')
   .post(authorise('Admin', 'Member'), refreshAccessToken);
-router.route('/company').post(createCompany);
+router.route('/company').post(validator(createCompanySchema), createCompany);
 
 router.use(verifyToken);
 
