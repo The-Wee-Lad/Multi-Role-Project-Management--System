@@ -23,9 +23,20 @@ app.use('/healthCheck', (_, res) => {
 const base_url = env.BASE_API_URL;
 
 import { projectRouter, taskRouter, userRouter } from './routes/index.js';
+import { authorise, verifyToken } from './middlewares';
 
 app.use(base_url + '/user', userRouter);
-app.use(base_url + '/project', projectRouter);
-app.use(base_url + '/task', taskRouter);
+app.use(
+  base_url + '/project',
+  verifyToken,
+  authorise('Admin', 'Manager'),
+  projectRouter
+);
+app.use(
+  base_url + '/task',
+  verifyToken,
+  authorise('Admin', 'Manager'),
+  taskRouter
+);
 
 export { app };

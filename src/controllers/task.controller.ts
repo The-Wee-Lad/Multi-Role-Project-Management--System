@@ -123,10 +123,15 @@ const updateTask = asyncHandler(async (req: Request, res: Response) => {
     .json(new ApiResponse(200, 'Task updated successfully', updatedTask));
 });
 
+const getAllTasks = asyncHandler(async (req: Request, res: Response) => {
+  // TODO:
+});
+
 export {
   createTask,
   unassignUserFromTask,
   assignUserToTask,
   deleteTask,
   updateTask,
+  getAllTasks,
 };

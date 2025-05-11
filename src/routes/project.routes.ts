@@ -9,4 +9,10 @@ import {
 
 const router = Router();
 
+router.route('/:id')
+  .post(createProject)
+  .get(getProjects)
+  .delete(deleteProject)
+  .patch(updateProject);
+
 export { router as projectRouter };

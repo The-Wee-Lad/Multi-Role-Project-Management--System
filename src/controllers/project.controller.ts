@@ -25,8 +25,7 @@ const createProject = asyncHandler(async (req: Request, res: Response) => {
     companyId: req.user?.companyId,
   });
 
-  if (!newProject)
-    throw new ApiError(500, 'DB Error', ErrorCode.DATABASE_ERROR);
+  if (!newProject) throw new ApiError(500, 'DB Error', ErrorCode.DATABASE_ERROR);
   res.json(new ApiResponse(200, 'New Project Created', newProject));
 });
 
@@ -102,4 +101,9 @@ const updateProject = asyncHandler(async (req: Request, res: Response) => {
     .json(new ApiResponse(200, 'Project updated successfully', updated));
 });
 
-export { createProject, getProjects, deleteProject, updateProject };
+export {
+  createProject,
+  getProjects,
+  deleteProject,
+  updateProject
+};

@@ -10,6 +10,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/user.model.js';
 import { cookieOptions } from '../configAndConstants.js';
 import { env } from '../configAndConstants.js';
+import { Task } from '../models/task.model.js';
 
 const createUser = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password, role = 'Member' } = req.body;
@@ -210,6 +211,38 @@ const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(new ApiResponse(200, 'Current Use Fetched', req.user));
 });
 
+const updateTask = asyncHandler(async (req: Request, res: Response) => {
+  const { taskId } = req.params;
+  const { title, description, status } = req.body;
+
+  const task = await Task.findById(taskId);
+
+  if (!task) {
+    throw new ApiError(404, 'Task not found', ErrorCode.DATA_NOT_FOUND_ERROR);
+  }
+
+  if (
+    !task.assignedTo.some((_id) => _id.toString() == req.user?._id?.toString())
+  )
+    throw new ApiError(403, 'Unauthorised', ErrorCode.UNAUTHORIZED);
+
+  task.title = title || task.title;
+  task.description = description || task.description;
+  task.status = status || task.status;
+  const updatedTask = await task.save();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, 'Task updated successfully', updatedTask));
+});
+
+const getUserTask = asyncHandler(async (req: Request, res: Response) => {
+  const userTasks = await Task.find({
+    _id: req.user?._id,
+  });
+  res.status(200).json(new ApiResponse(200, 'list fetched', userTasks));
+});
+
 export {
   createUser,
   updateUser,
@@ -219,4 +252,6 @@ export {
   getCurrentUser,
   listUser,
   refreshAccessToken,
+  updateTask,
+  getUserTask,
 };
