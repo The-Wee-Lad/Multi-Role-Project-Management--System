@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { env } from '../configAndConstants';
+import { env } from '../configAndConstants.js';
 
 console.log('Hey');
 

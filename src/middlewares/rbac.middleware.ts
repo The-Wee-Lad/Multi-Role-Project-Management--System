@@ -1,4 +1,4 @@
-import { asyncHandler, ApiError, ErrorCode } from '../utils';
+import { asyncHandler, ApiError, ErrorCode } from '../utils/index.js';
 import { User } from '../models/user.model.js';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { IUser } from '../user';

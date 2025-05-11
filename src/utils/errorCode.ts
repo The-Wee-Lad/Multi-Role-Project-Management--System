@@ -20,6 +20,10 @@ const enum ErrorCode {
 }
 
 
+interface ErrorDetail {
+  field: string;
+  message: string;
+}
 
 function formatJoiErrors(error: Joi.ValidationError) {
   if (!error || !error.details) return [];
@@ -30,4 +34,4 @@ function formatJoiErrors(error: Joi.ValidationError) {
   }));
 }
 
-export { ErrorCode, formatJoiErrors };
+export { ErrorCode, formatJoiErrors, ErrorDetail };

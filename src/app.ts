@@ -2,7 +2,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
-import { corsOptions, env, rateLimitOptions } from './configAndConstants';
+import { corsOptions, env, rateLimitOptions } from './configAndConstants.js';
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use('/healthCheck', (_, res) => {
 const base_url = env.BASE_API_URL;
 
 import { projectRouter, taskRouter, userRouter } from './routes/index.js';
-import { authorise, globalErrorHandler, verifyToken } from './middlewares';
+import { authorise, globalErrorHandler, verifyToken } from './middlewares/index.js';
 
 app.use(base_url + '/user', userRouter);
 app.use(base_url + '/project', verifyToken, authorise('Admin', 'Manager'), projectRouter);
