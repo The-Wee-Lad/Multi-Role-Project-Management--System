@@ -6,7 +6,7 @@ MONGO_URI='mongodb://<username>:<password>@<host>:<port>/<database_name>'
 
 PORT='3000'
 
-# Environment mode (e.g. development, production)
+# Environment moAde (e.g. development, production)
 
 NODE_ENV='development'
 
